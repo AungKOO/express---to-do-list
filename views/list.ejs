@@ -14,6 +14,7 @@
         value="<%=i._id %>"
         onchange="this.form.submit()"
       />
+      <input type="hidden" name="listTitle" value="<%= listTitle%>">
       <p><%= i.name %></p>
     </div>
   </form>
@@ -26,7 +27,7 @@
       placeholder="New Item"
       autocomplete="off"
     />
-    <button type="submit" name="list">+</button>
+    <button type="submit" name="listName" value="<%= listTitle %>">+</button>
   </form>
 </div>
 
