@@ -34,15 +34,14 @@ app.get("/", function (req, res) {
       if (items.length === 0) {
         Item.insertMany(defaultItems, (err) => {
           if (err) {
-            console.log(err)
+            console.log(err);
           } else {
-            console.log("Save Succcessfully")
-            res.redirect('/')
+            console.log("Save Succcessfully");
+            res.redirect("/");
           }
         });
       } else {
         res.render("list", { listTitle: "Today", newListItems: items });
-
       }
     }
   });
@@ -56,9 +55,17 @@ app.get("/about", function (req, res) {
 app.post("/", function (req, res) {
   const itemName = req.body.newItem;
   const list = req.body.list;
-  const item = new Item({name: itemName})
-  item.save()
-  res.redirect('/')
+  const item = new Item({ name: itemName });
+  item.save();
+  res.redirect("/");
 });
+
+// * DELETE method
+app.post("/delete", function (req, res) {
+  const id = req.body.check;
+  Item.findByIdAndRemove(id, (err) => console.log("removed successfully"));
+  res.redirect('/')
+}
+);
 
 module.exports = app;
