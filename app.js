@@ -3,10 +3,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const dotEnv = require("dotEnv");
-const capitalize = require('lodash.capitalize');
-
-dotEnv.config();
+const capitalize = require('lodash.capitalize'); // captilaize only first char
 
 const app = express();
 
@@ -45,9 +42,8 @@ app.get("/", function (req, res) {
       if (items.length === 0) {
         Item.insertMany(defaultItems, (err) => {
           if (err) {
-            console.log(err);
+            console.error(err);
           } else {
-            console.log("Save Succcessfully");
             res.redirect("/");
           }
         });
@@ -64,15 +60,15 @@ app.get("/:id", (req, res) => {
   List.findOne({ name: id }, async (err, foundList) => {
     if (!err) {
       if (foundList) {
-        // console.log("something strange")
+
         res.render("list", { listTitle: id, newListItems: foundList.items });
       } else {
-      //  console.log("It worked here")
         const list = new List({
           name: id,
           items: defaultItems,
         });
-        await list.save().then(() => console.log("it saved successfully"));
+        await list.save()
+        
         res.redirect('/' + id);
       }
     }
